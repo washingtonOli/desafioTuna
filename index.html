@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuna - Estados e Regiões de atuação</title>
+
+    <!-- Fonte -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@100;300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome menu hamburguer -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="icon">
+            <img alt="Tuna logo"
+                srcset="https://tunapagamentos.com.br/tuna.svg?imwidth=96 1x, https://tunapagamentos.com.br/tuna.svg?imwidth=256 2x"
+                src="https://tunapagamentos.com.br/tuna.svg?imwidth=256" decoding="async" class="tuna-logo">
+        </div>
+
+        <!-- Menu do cabeçalho -->
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="https://tunapagamentos.com.br" target="_blank">Nossa Solução</a></li>
+                <li><a href="https://tunapagamentos.com.br" target="_blank">Documentação</a></li>
+                <li><a href="https://ajuda.tuna.uy/kb/?utm_source=site&utm_medium=tuna-site&utm_campaign=menu" target="_blank">Ajuda</a></li>
+                <li><a href="https://console.tuna.uy/" target="_blank">Entrar</a></li>
+            </ul>
+        </nav>
+
+        <!-- Botão para abrir o menu lateral (visível apenas em telas menores) -->
+        <div class="menu-toggle">
+            <i class="fas fa-bars" style="font-size: 24px; color: #333;"></i>
+        </div>
+
+        <!-- Sidebar para resoluções menores -->
+        <nav class="sidebar">
+            <ul>
+                <li><a href="#">Nossa Solução</a></li>
+                <li><a href="#">Documentação</a></li>
+                <li><a href="#">Ajuda</a></li>
+                <li><a href="#">Entrar</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Container do carrossel -->
+    <div class="carousel-container">
+        <button class="carousel-prev"><</button>
+        <div id="container" class="carousel-slide"></div>
+        <button class="carousel-next">></button>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+</body>
+
+</html>
