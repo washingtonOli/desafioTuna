@@ -18,70 +18,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         sidebar.classList.toggle('active');
     });
 
-    // Função para gerar os slides do carrossel
-    const criarCarrossel = () => {
-        const regioes = []; // Array que vai armazenar as regiões. Vai passar a se comportar como um objeto pois não tem indice numerico
-
-        // Agrupa estados por região
-        estados.forEach((estado) => {
-            const regiaoNome = estado.regiao.nome;  // Obtém o nome da região do estado
-
-            // Vai criar um array para cada região. Depois, alimenta com o novo estado após cada iteração.
-            if (!regioes[regiaoNome]) {
-                regioes[regiaoNome] = [];  // Cria um novo array para cada região
-            }
-
-            // Adiciona o estado à região/vai alimentando
-            regioes[regiaoNome].push(`${estado.sigla} - ${estado.nome}`);
-        });
-
-        // ordenar alfabeticamente
-        Object.keys(regioes).forEach((regiaoNome) => {
-            //console.log(`Região: ${regiaoNome}`);
-            //console.log("Estados:", regioes[regiaoNome]);
-            regioes[regiaoNome].sort();
-
-            // Cria a caixa para a região
-            const caixaRegiao = document.createElement('div');
-            caixaRegiao.classList.add('caixa-regiao');
-
-            // Cabeçalho da região
-            const regiaoHeader = document.createElement('div');
-            regiaoHeader.classList.add('regiao-header');
-
-            // vai buscar o nome da regiao e sigla pertencente ao estado 
-            const siglaNomeRegiao = estados.find((estado) => estado.regiao.nome === regiaoNome);
-            //console.log (siglaNomeRegiao.regiao.nome);
-            //console.log (siglaNomeRegiao.regiao.sigla);
-            // adiciona ao cabeçalho da caixa região
-            regiaoHeader.textContent = `${siglaNomeRegiao.regiao.nome} - ${siglaNomeRegiao.regiao.sigla}`;
-
-            // Corpo da região (onde os estados vão aparecer)
-            const regiaoBody = document.createElement('div');
-            regiaoBody.classList.add('regiao-body');
-
-            // Cria e adiciona cada estado ao corpo da região
-            regioes[regiaoNome].forEach((estado) => {
-                const estadoDiv = document.createElement('div');
-                estadoDiv.classList.add('estado');
-                estadoDiv.textContent = estado;
-                regiaoBody.appendChild(estadoDiv);
-            });
-
-            // Adiciona o cabeçalho e o corpo à caixa da região
-            caixaRegiao.appendChild(regiaoHeader);
-            caixaRegiao.appendChild(regiaoBody);
-
-            // Adiciona a caixa da região ao container principal
-            container.appendChild(caixaRegiao);
-        });
-
-        // Atualiza o número total de slides (regiões)
-        totalSlides = container.children.length;
-    };
-
-    // Chama a função para gerar os slides do carrossel
-    criarCarrossel();
 
     // Função para atualizar a posição do carrossel
     const updateCarousel = () => {
@@ -118,4 +54,72 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         updateCarousel();
     });
+
+    // Esse método é auto executável. Ele roda sozinho sem ninguém chamar.
+    // seria o mesmo que declarar o método com um nome e chama-lo logo depois de sua declaração
+    (() => {
+        const regioes = [];
+
+        estados.forEach((estado) => {
+            // Verifica se ja tem um objeto Região com esse nome. Se não tem, adiciona no array
+            if (!regioes.find(r => r.nome == estado.regiao.nome)) {
+                regioes.push({
+                    nome: estado.regiao.nome,
+                    sigla: estado.regiao.sigla
+                });
+            }
+
+            //busca o objeto região que ja esta na lista
+            const regiao = regioes.find(r => r.nome == estado.regiao.nome);
+
+            //testa se ja tem o array de estados em cada região, se não tem, cria
+            if (!regiao.estados)
+                regiao.estados = [];
+
+            // adiciona o estado no objeto região que esta no array regioes
+            regiao.estados.push(estado);
+        });
+
+        // ordena as regiões alfabeticamente
+        regioes.sort((r1, r2) => {
+            if (r1.nome < r2.nome) return -1;
+            if (r1.nome > r2.nome) return 1;
+            return 0;
+        })
+
+        regioes.forEach((regiao) => {
+
+            // ordena alfabeticamente os estados de cada região
+            regiao.estados.sort((e1, e2) => {
+                if (e1.nome < e2.nome) return -1;
+                if (e1.nome > e2.nome) return 1;
+                return 0;
+            })
+
+            const caixaRegiao = document.createElement('div');
+            caixaRegiao.classList.add('caixa-regiao');
+
+            const regiaoHeader = document.createElement('div');
+            regiaoHeader.classList.add('regiao-header');
+
+            regiaoHeader.textContent = `${regiao.nome} - ${regiao.sigla}`;
+
+            const regiaoBody = document.createElement('div');
+            regiaoBody.classList.add('regiao-body');
+
+            regiao.estados.forEach((estado) => {
+                const estadoDiv = document.createElement('div');
+                estadoDiv.classList.add('estado');
+                estadoDiv.textContent = estado.nome;
+                regiaoBody.appendChild(estadoDiv);
+            });
+
+            caixaRegiao.appendChild(regiaoHeader);
+            caixaRegiao.appendChild(regiaoBody);
+            container.appendChild(caixaRegiao);
+        });
+
+        totalSlides = container.children.length;
+    })();
+
 });
