@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             regiao.estados.forEach((estado) => {
                 const estadoDiv = document.createElement('div');
                 estadoDiv.classList.add('estado');
-                estadoDiv.textContent = estado.nome;
+                estadoDiv.textContent = `${estado.nome} - ${estado.sigla}`;
                 regiaoBody.appendChild(estadoDiv);
             });
 
